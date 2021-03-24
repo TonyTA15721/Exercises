@@ -1,0 +1,68 @@
+// Exercise 1
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+class BaseMath
+{
+	public:
+		bool isEven(int number)
+		{
+			bool result = false;
+			if (number%2==0)
+			{
+				result = true;
+			}
+			return result;
+		}
+		int fractorial(int n)
+		{
+			int result = 1;
+			for (int i=1; i<=n; i++)
+			{
+				result = result*i;
+			}
+			return result;
+		}
+};
+
+class AdvancedMath
+{
+	public:
+		bool isEven(int number)
+		{
+			bool result = false;
+			if (number%2==0)
+			{
+				result = true;
+			}
+			return result;
+		}
+		int fractorial(int n)
+		{
+			int result = 1;
+			for (int i=1; i<=n; i++)
+			{
+				result = result*i;
+			}
+			return result;
+		}
+		double estimateEulerNumber(int numloops)
+		{
+			double result = 1.0;
+			for (int i=1; i<=numloops; i++)
+			{
+				result = result + 1.0/fractorial(i);
+			}
+			return result;
+		}
+};
+
+int main()
+{
+	AdvancedMath o;
+	double result =  o.estimateEulerNumber(11);
+	printf ("exp is %f", result);
+	return 0;
+}
