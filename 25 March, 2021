@@ -66,3 +66,160 @@ int main()
 	printf ("exp is %f", result);
 	return 0;
 }
+
+
+
+
+
+
+
+//Exercise 2
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+class Point
+{
+private:
+	double x, y;
+
+public:
+	Point () {}
+	Point (double x, double y): x{x}, y{y} {}
+	void update (double x, double y)
+	{
+		this->x=x;
+		this->y=y;
+	}
+	double distance(Point t)
+	{
+		return sqrt(pow(this->x-t.x,2)+pow(this->y-t.y,2));
+	}
+};
+
+class Shape
+{
+protected:
+	Point center;
+
+public:
+	Shape(){}
+	virtual double computeArea()=0;
+	virtual double computeCircumference()=0;
+//	virtual void update ()=0;
+	Point getCenter()
+	{
+		return this->center;
+	}
+	double distance(Point t)
+	{
+		return center.distance(t);
+	}
+};
+
+class Circle: public Shape
+{
+private:
+	double r;
+
+public:
+	Circle(double x, double y, double r)
+	{
+		this->center.update(x,y);
+		this->r = r;
+	}
+	void update (double r)
+	{
+		this->r=r;
+	}
+	double computeArea()
+	{
+		return pow(this->r,2)*M_PI;
+	}
+
+	double computeCircumference()
+	{
+		return 2*M_PI*this->r;
+	}
+};
+
+class Square: public Shape
+{
+private:
+	double side;
+
+public:
+	Square (double x, double y, double side)
+	{
+		this->center.update(x,y);
+		this->side = side;
+	}
+	void update (double side)
+	{
+		this->side=side;
+	}
+	double computeArea()
+	{
+		return pow(this->side,2);
+	}
+
+	double computeCircumference()
+	{
+		return 4*this->side;
+	}
+};
+
+class Rectangle: public Shape
+{
+private:
+	double a;
+	double b;
+
+public:
+	Rectangle (double x, double y, double a, double b)
+	{
+		this->center.update(x,y);
+		this->a = a;
+		this->b = b;
+	}
+	void update (double a, double b)
+	{
+		this->a=a;
+		this->b=b;
+	}
+	double computeArea()
+	{
+		return this->a*this->b;
+	}
+
+	double computeCircumference()
+	{
+		return (this->a+this->b)*2;
+	}
+};
+
+int main()
+{
+	Shape *Circle1 = new Circle(3,8,1);
+	Shape *Square1 = new Square(2,4,2);
+	Shape *Rectangle1 = new Rectangle (3,6,7,9);
+
+	//Circle
+	cout << "Circle:"<< endl;
+	cout<< "Area of circle is: " << Circle1->computeArea()<< endl;
+	cout<< "Circumference of circle is: " << Circle1->computeCircumference()<< endl;
+	cout<< "Distance between circle and square: "<< Circle1->distance(Square1->getCenter())<< endl<<endl;
+
+	//Square
+	cout << "Square:"<< endl;
+	cout<< "Area of square is: " <<Square1->computeArea()<< endl;
+	cout<< "Circumference of square is: " <<Square1->computeCircumference()<< endl;
+	cout<< "Distance between square and rectangle: "<<Square1->distance(Rectangle1->getCenter())<< endl<<endl;
+
+	//Rectangle
+	cout << "Rectangle:"<< endl;
+	cout<< "Area of rectangle is: " <<Rectangle1->computeArea()<< endl;
+	cout<< "Circumference of rectangle is: " <<Rectangle1->computeCircumference()<< endl;
+	cout<< "Distance between circle and rectangle: "<<Rectangle1->distance(Circle1->getCenter())<< endl;
+}
